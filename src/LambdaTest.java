@@ -25,5 +25,4 @@ public class LambdaTest {
             System.out.println(brp.process(br));
         }
     }
-
 }

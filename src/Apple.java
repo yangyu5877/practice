@@ -1,15 +1,21 @@
 /**
  * Created by yangyou on 2018/9/10.
  */
-public class Apple {
+public class Apple extends MethodReferenceTest.Fruit {
 
     private String color;
 
     private Integer weight;
 
+    public Apple() {}
+
     public Apple(String _color, Integer _weight) {
         this.color = _color;
         this.weight = _weight;
+    }
+
+    public Apple(Integer weight) {
+        this.weight = weight;
     }
 
     public String getColor() {
