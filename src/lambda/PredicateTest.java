@@ -1,11 +1,13 @@
+package lambda;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * Created by yangyou on 2018/9/12.
  */
-public class FucationTest {
+public class PredicateTest {
     public static void main(String[] args) {
         Apple a = new Apple("yellow", 1);
         Apple b = new Apple("red", 110);
@@ -16,14 +18,17 @@ public class FucationTest {
         inventary.add(b);
         inventary.add(c);
         inventary.add(d);
-        System.out.println(map(inventary, (e -> e.getWeight())));
+        List<Apple> apples = filter(inventary, a1 -> a1.getColor() == "yellow");
+        System.out.println(apples.size());
     }
-    public static <T,R> List<R> map(List<T> list, Function<T, R> f) {
-        List<R> results = new ArrayList<>();
-        for (T t : list) {
-            results.add(f.apply(t));
+    public static <T> List<T> filter(List<T> values, Predicate<T> p) {
+        List<T> results = new ArrayList<>();
+        for (T t : values) {
+            if (p.test(t)) {
+                results.add(t);
+            }
         }
         return results;
-
     }
+
 }

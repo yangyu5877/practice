@@ -1,3 +1,5 @@
+package lambda;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -8,9 +10,9 @@ import java.util.stream.Collectors;
  */
 public class AppleTest {
 
-//    public List<Apple> filter(List<Apple> inventary, Predicate<Apple> p) {
-//        List<Apple> results = new ArrayList<>();
-//        for (Apple a : inventary) {
+//    public List<lambda.Apple> filter(List<lambda.Apple> inventary, Predicate<lambda.Apple> p) {
+//        List<lambda.Apple> results = new ArrayList<>();
+//        for (lambda.Apple a : inventary) {
 //            if (p.test(a)) {
 //                results.add(a);
 //            }
