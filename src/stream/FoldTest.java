@@ -32,6 +32,6 @@ public class FoldTest {
         );
         System.out.println(menu.stream().count());
         System.out.println(menu.stream().map(d -> 1).reduce(0, (a,b) -> a+b));
-        System.out.println(menu.stream().map(d -> 1).reduce(Integer::sum).get()f);
+        System.out.println(menu.stream().map(d -> 1).reduce(Integer::sum).get());
 }
 }
