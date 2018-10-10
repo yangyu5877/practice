@@ -38,6 +38,8 @@ public interface YangMap<K, V> {
 
     Collection<V> values();
 
+    Set<Entry<K,V>> entrySet();
+
     interface Entry<K, V> {
 
         K getKey();
@@ -72,10 +74,8 @@ public interface YangMap<K, V> {
 
     }
 
+    boolean equals(Object o);
 
-
-
-
-
+    int hashCode();
 
 }
