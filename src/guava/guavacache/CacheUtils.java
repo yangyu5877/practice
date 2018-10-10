@@ -59,7 +59,6 @@ public class CacheUtils {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
 //        loadingCachetest();
         callcacheTest();
-
     }
 
     public static void loadingCachetest() throws ExecutionException {

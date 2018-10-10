@@ -1,6 +1,8 @@
 package yangmap;
 
+import java.io.Serializable;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Set;
 
@@ -36,7 +38,39 @@ public interface YangMap<K, V> {
 
     Collection<V> values();
 
+    interface Entry<K, V> {
 
+        K getKey();
+
+        V getValue();
+        //返回的V是 key关联的old value
+
+        V setValue(K key);
+
+        boolean equal();
+
+        int hashCode();
+
+        //java8中可以在接口中定义静态方法
+
+
+        static <K extends Comparable<? super K>, V> Comparator<Map.Entry<K, V>> comparingByKey() {
+            // & 为新语法，需要满足两种类型， 不是与操作的意思
+            return (Comparator<Map.Entry<K,V>> & Serializable)
+                  (c1, c2) -> c1.getKey().compareTo(c2.getKey());
+        }
+
+        static <K, V extends Comparable<? super V> > Comparator<Map.Entry<K, V>> comparingByValue() {
+            return (Comparator<Map.Entry<K,V>> & Serializable)
+                    (c1, c2) -> c1.getValue().compareTo(c2.getValue());
+        }
+
+        static <K, V> Comparator<Map.Entry<K, V>> comparingByKey(Comparator<? super K> cmp) {
+            return (Comparator<Map.Entry<K,V>> & Serializable)
+                    (c1, c2) -> cmp.compare(c1.getKey(), c2.getKey());
+        }
+
+    }
 
 
 
