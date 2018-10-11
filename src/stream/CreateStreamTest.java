@@ -3,6 +3,7 @@ package stream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -31,10 +32,13 @@ public class CreateStreamTest {
 
     public static void createStreamByFiles() {
 //        System.out.println(Paths.get("data.txt"));
-        String path = CreateStreamTest.class.getClassLoader().getResource("").getPath();
-        System.out.println(path);
         long countWords = 0;
-        try(Stream<String> lines = Files.lines(Paths.get("data.txt"), Charset.defaultCharset())) {
+//        绝对路径
+        Path    path = Paths.get("F:\\tmp\\data.txt");
+//        相对路径
+        Path path2 = Paths.get("F:\\tmp\\", "data.txt");
+
+        try(Stream<String> lines = Files.lines(path2, Charset.defaultCharset())) {
             countWords = lines.flatMap(a -> Arrays.stream(a.split(""))).distinct().count();
         } catch (IOException e) {
             e.printStackTrace();
