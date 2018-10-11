@@ -7,8 +7,8 @@ import java.util.Set;
  * Created by yangyou on 2018/10/10.
  */
 public abstract class YangAbstractMap<K, V> implements YangMap<K, V> {
+    // TODO: 2018/10/11 由子类invoke???
     protected YangAbstractMap() {}
-
 
     @Override
     public boolean containsValue(Object value) {
@@ -57,11 +57,33 @@ public abstract class YangAbstractMap<K, V> implements YangMap<K, V> {
 
     @Override
     public V remove(Object key) {
-        return null;
+        Iterator<Entry<K, V>> i = entrySet().iterator();
+        Entry<K, V> correctEntry = null;
+        if (null == key) {
+            while(i.hasNext() && null == correctEntry) {
+                Entry<K, V> e = i.next();
+                if (null == e.getKey()) {
+                    correctEntry = e;
+                }
+            }
+
+        }else {
+            while(i.hasNext() && null == correctEntry) {
+                Entry<K, V> e = i.next();
+                if (key.equals(e.getKey())) {
+                    correctEntry = e;
+                }
+            }
+        }
+        V oldValue = null;
+        if (null != correctEntry) {
+            oldValue = correctEntry.getValue();
+            // TODO: 2018/10/11 为什么删除iterator就可以将entry删除？
+            // entrySet是抽象的，由子类实现，如 hashmap Override这个方法，并在该方法中重写了remove()方法
+            i.remove();
+        }
+        return oldValue;
     }
-
-
-
 
     public abstract Set<Entry<K, V>> entrySet();
 }
