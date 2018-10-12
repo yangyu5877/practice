@@ -1,7 +1,8 @@
 package yangmap;
 
-import java.util.Iterator;
-import java.util.Set;
+import com.google.common.collect.AbstractIterator;
+
+import java.util.*;
 
 /**
  * Created by yangyou on 2018/10/10.
@@ -9,6 +10,14 @@ import java.util.Set;
 public abstract class YangAbstractMap<K, V> implements YangMap<K, V> {
     // TODO: 2018/10/11 由子类invoke???
     protected YangAbstractMap() {}
+
+
+
+    public int size() {
+        return entrySet().size();
+    }
+
+
 
     @Override
     public boolean containsValue(Object value) {
@@ -51,7 +60,6 @@ public abstract class YangAbstractMap<K, V> implements YangMap<K, V> {
                 }
             }
         }
-
         return null;
     }
 
@@ -83,6 +91,93 @@ public abstract class YangAbstractMap<K, V> implements YangMap<K, V> {
             i.remove();
         }
         return oldValue;
+    }
+
+
+    transient Set<K> keySet;
+    transient Collection<V> values;
+
+
+    public Set<K> keySet() {
+        Set<K> keys = keySet;
+        if (null == keys) {
+            keys = new AbstractSet<K>() {
+                @Override
+                public Iterator<K> iterator() {
+                    return new Iterator<K>() {
+                        @Override
+                        public boolean hasNext() {
+                            return entrySet().iterator().hasNext();
+                        }
+
+                        @Override
+                        public K next() {
+                            return entrySet().iterator().next().getKey();
+                        }
+                    };
+                }
+
+                @Override
+                public int size() {
+                    return YangAbstractMap.this.size();
+                }
+
+                @Override
+                public boolean contains(Object o) {
+                    return YangAbstractMap.this.containsKey(o);
+                }
+
+            };
+        }
+        keySet = keys;
+
+        return keySet;
+
+
+    }
+
+
+    public Collection<V> values() {
+        //先读到local variable 中，进行判断，而不是直接进行判断， 避免多线程情况出现不一致
+        Collection<V> vals = values;
+        if (null == vals) {
+            vals = new AbstractCollection<V>() {
+                @Override
+                public Iterator<V> iterator() {
+                    return new Iterator<V>() {
+                        private Iterator<Entry<K, V>> i = entrySet().iterator();
+
+                        @Override
+                        public boolean hasNext() {
+                            return i.hasNext();
+                        }
+
+                        @Override
+                        public V next() {
+                            return i.next().getValue();
+                        }
+
+                        @Override
+                        public void remove() {
+                            i.remove();
+                        }
+                    };
+                }
+                @Override
+                public int size() {
+                    //不能使用this.size()   因为this.size() 指的是这个匿名函数类
+                    return YangAbstractMap.this.size();
+                }
+
+                @Override
+                public boolean contains(Object o) {
+                    return YangAbstractMap.this.containsValue(o);
+                }
+            };
+            values = vals;
+        }
+
+        return values;
     }
 
     public abstract Set<Entry<K, V>> entrySet();
