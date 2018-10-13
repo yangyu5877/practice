@@ -1,6 +1,5 @@
 package yangmap;
 
-import com.google.common.collect.AbstractIterator;
 
 import java.util.*;
 
@@ -181,4 +180,67 @@ public abstract class YangAbstractMap<K, V> implements YangMap<K, V> {
     }
 
     public abstract Set<Entry<K, V>> entrySet();
+
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Map))
+            return false;
+
+        Map<?,?> m = (Map<?,?>) o;
+        if (m.size() != this.size())
+            return false;
+
+        Iterator<Entry<K, V>> i = entrySet().iterator();
+        while(i.hasNext()) {
+            Entry<K, V> e = i.next();
+            K key = e.getKey();
+            V value = e.getValue();
+            if (null == value) {
+                if (!(m.get(key) == null && m.containsKey(key))) {
+                    return false;
+                }
+            }else {
+                if (!(m.containsKey(key) && value.equals(m.get(key)))) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        Iterator<Entry<K, V>> i = entrySet().iterator();
+
+        //只有if没有else情况，  不管前面的if是否成功， 后面的if都会执行， 如果if中有return 例外
+
+        if (!i.hasNext()) {
+            return "{}";
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("{");
+
+        while(i.hasNext()) {
+            Entry<K, V> e = i.next();
+            K key = e.getKey();
+            V value = e.getValue();
+            sb.append(key == this ? "{thisMap}" : key);
+            sb.append(":");
+            sb.append(value == this ? "{thisMap}" : value);
+            sb.append(",");
+        }
+
+        sb.append("}");
+        return sb.toString();
+
+
+    }
+
+
 }
