@@ -1,5 +1,7 @@
 package stream;
 
+import java.util.Objects;
+
 /**
  * Created by yangyou on 2018/9/15.
  */
@@ -34,4 +36,8 @@ public class Dish {
 
     public enum Type {MEAT, FISH, OTHER};
 
+    @Override
+    public String toString() {
+        return this.getName() + " " + this.getColories() + " " + this.isVegetarian() + " " + this.getType();
+    }
 }
