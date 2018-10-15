@@ -1,5 +1,10 @@
 package stream.groupByAndPartition;
 
+import com.google.common.collect.Maps;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -18,11 +23,18 @@ public class PartitionTest {
         System.out.println("=====");
 
         System.out.println(isPrime2(2));
+        System.out.println(isPrime2(3));
         System.out.println("=====");
 
         IntStream.range(10, 1).boxed().forEach(a -> System.out.println(a));
         Stream<Integer> a = Stream.empty();
         a.forEach(n -> System.out.println(n));
+
+
+        partitionPrime(100).forEach((a1, a2) -> System.out.println( a1 + " " + a2));
+
+
+
     }
 
     // 按菜品 素食与非素食 分区
@@ -46,10 +58,15 @@ public class PartitionTest {
     }
 
 
-
     //优化的isPrime
 
     //将前n个自然数分为质数与非质数
+
+    public static Map<Boolean, List<Integer>> partitionPrime(int num) {
+        Map<Boolean, List<Integer>> result = Maps.newHashMap();
+        result = IntStream.range(2, num).boxed().collect(Collectors.partitioningBy(PartitionTest::isPrime));
+        return result;
+    }
 
 
 }

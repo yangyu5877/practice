@@ -1,6 +1,7 @@
 package yangmap;
 
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -241,6 +242,14 @@ public abstract class YangAbstractMap<K, V> implements YangMap<K, V> {
 
 
     }
+
+//
+//    public static class SimpleEntry<K, V> implements Entry<K, V>, Serializable {
+//
+//    }
+//
+//    public static class SimpleImutableEntry<K, V> implements Entry<K, V>, Serializable {}
+//
 
 
 }

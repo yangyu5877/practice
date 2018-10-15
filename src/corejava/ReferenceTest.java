@@ -7,6 +7,10 @@ import java.util.Objects;
  */
 public class ReferenceTest {
 
+    private String a;
+
+    private int b;
+
     public static void main(String[] args) {
         String a = null;
 
@@ -16,5 +20,15 @@ public class ReferenceTest {
 
         System.out.println(Objects.isNull(a));
     }
+
+    public ReferenceTest(String a, int b) {
+        this.a = a;
+        this.b = b;
+    }
+    public ReferenceTest(int b, String a) {
+        this.a = a;
+        this.b = b;
+    }
+
 
 }
