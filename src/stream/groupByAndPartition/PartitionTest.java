@@ -1,6 +1,7 @@
 package stream.groupByAndPartition;
 
 import com.google.common.collect.Maps;
+import stream.collector.PrimeCollector;
 
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,9 @@ public class PartitionTest {
         partitionPrime(100).forEach((a1, a2) -> System.out.println( a1 + " " + a2));
 
 
+        partitionPrime2(100).forEach((a1, a2) -> System.out.println( a1 + " " + a2));
+
+
 
     }
 
@@ -54,7 +58,7 @@ public class PartitionTest {
 
 
     public static boolean isPrime2(int number) {
-        return !IntStream.range(2, number).anyMatch(i -> number % i == 0);
+        return IntStream.range(2, number).noneMatch(i -> number % i == 0);
     }
 
 
@@ -64,8 +68,16 @@ public class PartitionTest {
 
     public static Map<Boolean, List<Integer>> partitionPrime(int num) {
         Map<Boolean, List<Integer>> result = Maps.newHashMap();
-        result = IntStream.range(2, num).boxed().collect(Collectors.partitioningBy(PartitionTest::isPrime));
+        result = IntStream.range(2, num).boxed().collect(Collectors.partitioningBy(PartitionTest::isPrime2));
         return result;
+    }
+
+    public static Map<Boolean, List<Integer>> partitionPrime2(int num) {
+        PrimeCollector primeCollector = new PrimeCollector();
+        Map<Boolean, List<Integer>> result = Maps.newHashMap();
+         result = IntStream.range(2, num).boxed().collect(primeCollector);
+         return result;
+
     }
 
 
