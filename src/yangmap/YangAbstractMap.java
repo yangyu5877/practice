@@ -239,17 +239,77 @@ public abstract class YangAbstractMap<K, V> implements YangMap<K, V> {
 
         sb.append("}");
         return sb.toString();
-
-
     }
 
-//
-//    public static class SimpleEntry<K, V> implements Entry<K, V>, Serializable {
-//
-//    }
-//
+    private static boolean eq(Object o1, Object o2) {
+        return null == o1 ? null == o2 : o1.equals(o2);
+    }
+
+
+    public static class SimpleEntry<K, V> implements Entry<K, V>, Serializable {
+
+        private static final long serialVersionUID = -8499721149061103585L;
+
+        // TODO: 2018/10/16 为什么是final
+        private final K key;
+
+        private V value;
+
+        public SimpleEntry(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        public SimpleEntry(Entry<? extends K, ? extends V> entry) {
+            this.key = entry.getKey();
+            this.value = entry.getValue();
+        }
+
+
+
+        @Override
+        public K getKey() {
+            return this.key;
+        }
+
+        @Override
+        public V getValue() {
+            return this.value;
+        }
+
+        //返回老的Value
+        @Override
+        public V setValue(V value) {
+            V oldValue = this.value;
+            this.value = value;
+            return oldValue;
+        }
+
+        @Override
+        public String toString() {
+            return "SimpleEntry{" +
+                    "key=" + key +
+                    ", value=" + value +
+                    '}';
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            SimpleEntry<?, ?> that = (SimpleEntry<?, ?>) o;
+            return Objects.equals(key, that.key) &&
+                    Objects.equals(value, that.value);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(key, value);
+        }
+    }
+
 //    public static class SimpleImutableEntry<K, V> implements Entry<K, V>, Serializable {}
-//
+
 
 
 }

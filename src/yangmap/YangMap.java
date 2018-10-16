@@ -47,9 +47,9 @@ public interface YangMap<K, V> {
         V getValue();
         //返回的V是 key关联的old value
 
-        V setValue(K key);
+        V setValue(V value);
 
-        boolean equal();
+        boolean equals(Object o);
 
         int hashCode();
 

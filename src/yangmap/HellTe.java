@@ -3,6 +3,7 @@ package yangmap;
 import com.google.common.collect.Maps;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -19,6 +20,18 @@ public class HellTe {
         Map<Object, String> b = Maps.newHashMap();
         b.put(b, "12");
         System.out.println(b);
+
+        Map<String, String> map = Maps.newHashMap();
+        String oldValue = map.put("", "");
+        System.out.println(Objects.isNull(oldValue));
+
+
+
+
+
+
+
+
     }
 
     class TestMap extends YangAbstractMap<String, String> {
