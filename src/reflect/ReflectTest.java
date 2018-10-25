@@ -29,6 +29,11 @@ public class ReflectTest {
 
     }
 
+    public static void test2() {
+//        Boy boy = new Man("", 2);
+    }
+
+
 
 
     class User {
